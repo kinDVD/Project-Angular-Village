@@ -1,0 +1,36 @@
+Create interface: Improvement
+	-3 properties
+		1.type
+		2.level
+		3.cost
+Create service: Village
+	-array of Improvements
+	-current resources Total
+App.Component:
+		+takes array of improvements
+		+takes resources from improvements
+		+includes 2 Components:
+			1.Map
+				+Tile
+					-displays tile on map
+						+may be empty or display improvement
+				+AddImprovementDialog
+					-a form shown when user clicks empty tile; allows user to select type of improvement to add
+				+EditImprovementDialog
+					-pane that displays when user clicks existing improvement
+					-shows information about improvement
+						+and has buttons to customize improvement:
+							-upgrade
+								+button disable if resources don't match costs
+							-downgrade*
+							-remove*
+							*buttons disabled if resources would go below zero
+			2.ResourcesView
+				+sub-component ResourceLine
+					-displays the icon, type, and amount of one resource
+EXTENDEDS:
+-mobile-friendly
+-add terrain to base map restricting where improvements can be placed (and/or making certain tiles unusable)
+-add bonuses for improvements to be in proximity
+-add animations
+
