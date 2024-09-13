@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './resoure-line.component.css'
 })
 export class ResoureLineComponent {
+  constructor(){}
 
 }

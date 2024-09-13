@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { VillageService } from '../../services/village.service';
+import { Resources } from '../../models/improvement';
 
 @Component({
   selector: 'app-resources-views',
@@ -8,5 +10,13 @@ import { Component } from '@angular/core';
   styleUrl: './resources-views.component.css'
 })
 export class ResourcesViewsComponent {
+  
+  constructor(private villageService: VillageService){ }
+
+  getResources():Resources[]{
+    return this.villageService.userResources;
+  }
+
+  
 
 }

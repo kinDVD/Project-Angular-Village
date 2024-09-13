@@ -72,7 +72,6 @@ export class VillageService {
       ]
     }
   ]
-
   userResources: Resources[] = [
     {
       lumber: 50,
