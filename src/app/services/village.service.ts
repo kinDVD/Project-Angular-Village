@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Improvements } from '../models/improvement';
+import { Improvements, Resources } from '../models/improvement';
 
 @Injectable({
   providedIn: 'root'
@@ -73,6 +73,15 @@ export class VillageService {
     }
   ]
 
+  userResources: Resources[] = [
+    {
+      lumber: 50,
+      grain: 50,
+      water: 50,
+      sheep: 50,
+      people: 50
+    }
+  ]
   constructor() { }
 
 
