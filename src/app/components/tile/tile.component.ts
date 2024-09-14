@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { VillageService } from '../../services/village.service';
+import { Improvements } from '../../models/improvement';
 
 @Component({
   selector: 'app-tile',
@@ -8,5 +10,15 @@ import { Component } from '@angular/core';
   styleUrl: './tile.component.css'
 })
 export class TileComponent {
+
+
+  constructor(private villageService: VillageService){}
+
+  getImprovement(): Improvements[]{
+    return this.villageService.userImprovements;
+  }
+
+
+
 
 }
