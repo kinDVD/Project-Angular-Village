@@ -16,7 +16,7 @@ export class AppComponent {
   title = 'Project-Angular';
 
   improvementArray:Improvements[] = [];
-  resourceArray:Resources[] = [];
+  resourceArray:Resources = {} as Resources;
   constructor(private villageService: VillageService) {}
 
   ngOnInit(){

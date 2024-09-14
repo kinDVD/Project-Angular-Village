@@ -1,7 +1,7 @@
 export interface Improvements{
     type: string;
     level: number;
-    cost: Resources[];
+    cost: Resources;
 
 }
 export interface Resources{

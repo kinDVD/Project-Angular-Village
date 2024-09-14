@@ -13,10 +13,9 @@ export class ResourcesViewsComponent {
   
   constructor(private villageService: VillageService){ }
 
-  getResources():Resources[]{
+  getResources():Resources{
     return this.villageService.userResources;
   }
-
   
 
 }
