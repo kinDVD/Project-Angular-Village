@@ -17,5 +17,6 @@ export class ResourcesViewsComponent {
     return this.villageService.userResources;
   }
   
+  
 
 }

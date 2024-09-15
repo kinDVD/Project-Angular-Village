@@ -23,4 +23,6 @@ export class AppComponent {
     this.improvementArray = this.villageService.improvements;
     this.resourceArray = this.villageService.userResources;
   }
+
+  
 }

@@ -5,6 +5,7 @@ import { Improvements, Resources } from '../models/improvement';
   providedIn: 'root'
 })
 export class VillageService {
+
   improvements: Improvements[] = [
     {
       type: "House",
@@ -68,7 +69,6 @@ export class VillageService {
     }
   ]
   userResources:Resources = {
-
       lumber: 5,
       grain: 5,
       water: 5,
