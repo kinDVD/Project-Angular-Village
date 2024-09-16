@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { VillageService } from '../../services/village.service';
 import { Improvements } from '../../models/improvement';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 
 @Component({
   selector: 'app-edit-improvement-dialog',
   standalone: true,
-  imports: [],
+  imports: [RouterLink, RouterOutlet],
   templateUrl: './edit-improvement-dialog.component.html',
   styleUrl: './edit-improvement-dialog.component.css'
 })
@@ -16,7 +17,7 @@ export class EditImprovementDialogComponent {
 
 
   constructor(private villageService: VillageService){}
-  ngOnIt(){
+  ngOnInit(){
   this.userImprovements = this.villageService.getImprovements();
   }
 
