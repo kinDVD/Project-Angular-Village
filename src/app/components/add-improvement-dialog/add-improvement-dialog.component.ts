@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Improvements } from '../../models/improvement';
 import { VillageService } from '../../services/village.service';
-import { BoardService } from '../../services/board.service';
-import { Board } from '../../models/board';
+
 
 @Component({
   selector: 'app-add-improvement-dialog',
@@ -14,12 +13,12 @@ import { Board } from '../../models/board';
 export class AddImprovementDialogComponent {
 
   userImprovements: Improvements[] = [];
-  userBoard: Board = {} as Board;
 
-  constructor(private villageService: VillageService, private boardService: BoardService){}
-  ngOnIt(){
+  constructor(private villageService: VillageService){}
+  ngOnInit(){
   this.userImprovements = this.villageService.getImprovements();
-  this.userBoard = this.boardService.getBoard();
+  console.log("App component is working!")
+  this.villageService.addImprovement("House", 0);
   }
 
   

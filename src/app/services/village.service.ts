@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Improvements, Resources } from '../models/improvement';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class VillageService {
+
+
 
   improvements: Improvements[] = [
     {
@@ -75,19 +78,28 @@ export class VillageService {
       sheep: 5,
       people: 0
   }
+    
   userImprovements: Improvements[] = [];
 
   cost: Resources = {} as Resources;
 
   //Adds improvement by taking in the improvementType the user wishes to upgrade
-  addImprovement(improvementType: string){
+  addImprovement(improvementType: string, id: number){
     let improvement = this.improvements.find(i => i.type === improvementType);
 
-    //Validates if the user can afford the improvement
     if(improvement !== undefined){
-      this.reduceResources(improvement.cost);
-      this.userImprovements.push(improvement);
+      this.userImprovements[id] = improvement;
     }
+    console.log(this.userImprovements);
+
+    // let currentTile = this.boardService.getTile(0, 0);
+    
+    // //Validates if the user can afford the improvement
+    // if(improvement !== undefined){
+      
+    //   this.reduceResources(improvement.cost);
+    //   //this.userImprovements.push({improvement, currentTile});
+    // }
   }
 
   //Method that checks if user can afford improvement
@@ -145,7 +157,6 @@ export class VillageService {
     return this.userImprovements;
   }
 
-  constructor() { }
 
 
 }
