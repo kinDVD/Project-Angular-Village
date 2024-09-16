@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { VillageService } from '../../services/village.service';
 import { Improvements } from '../../models/improvement';
 import { MapComponent } from '../map/map.component';
+import { Tile } from '../../models/board';
 
 @Component({
   selector: 'app-tile',
@@ -11,9 +12,19 @@ import { MapComponent } from '../map/map.component';
   styleUrl: './tile.component.css'
 })
 export class TileComponent {
+  tile: Tile = {} as Tile;
+  constructor(private villageService: VillageService){}
 
-displayTile(){
-  if(){}
-}
+  getTile():number{
+    return this.tile.id;
+  }
+
+  getTileStatus():boolean{
+    return this.tile.empty;
+  }
+
+  getUserImprovements(userImprovements: Improvements[]):void{
+    userImprovements = this.villageService.userImprovements;
+ }
 
 }

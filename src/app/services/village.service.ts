@@ -141,6 +141,10 @@ export class VillageService {
 
   }
 
+  getImprovements():Improvements[]{
+    return this.userImprovements;
+  }
+
   constructor() { }
 
 
