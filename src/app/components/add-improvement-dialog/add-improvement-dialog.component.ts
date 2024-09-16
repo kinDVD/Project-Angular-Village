@@ -14,6 +14,9 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 export class AddImprovementDialogComponent {
 
   userImprovements: Improvements[] = [];
+  test:String = "House";
+
+  display:boolean = false;
 
   constructor(private villageService: VillageService, private router: Router){}
   ngOnInit(){
@@ -23,7 +26,14 @@ export class AddImprovementDialogComponent {
   this.villageService.addImprovement("House", 0);
   }
 
-  
+  addToImprovements(name:String, id: number){
+    this.villageService.addImprovement(name, 0);
+  }
+
+  displayToggle(){
+    this.display = !this.display;
+    console.log(this.display);
+  }
 
 
 }

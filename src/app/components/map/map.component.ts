@@ -22,6 +22,7 @@ export class MapComponent {
     for(let i = 0; i<36; i++){
       this.improvementArray[i] = {} as Improvements;
     }
+
     console.log(this.improvementArray);
    this.getUserImprovements(this.improvementArray); 
   }
@@ -30,8 +31,9 @@ export class MapComponent {
   }
   
     onClick(i:number): void{
-      console.log(this.improvementArray[i])
-      if(this.improvementArray[i] === {} as Improvements){
+      let test = this.improvementArray[i];
+      console.log(this.improvementArray[i]);
+       if (JSON.stringify(test) === "{}"){
         this.router.navigate(['/AddImprovement', i])
       }
       else{

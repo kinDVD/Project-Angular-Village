@@ -84,13 +84,16 @@ export class VillageService {
   cost: Resources = {} as Resources;
 
   //Adds improvement by taking in the improvementType the user wishes to upgrade
-  addImprovement(improvementType: string, id: number){
+  addImprovement(improvementType: String, id: number){
     let improvement = this.improvements.find(i => i.type === improvementType);
 
     if(improvement !== undefined){
-      this.userImprovements[id] = improvement;
+      console.log(improvement)
+      this.userImprovements.splice(id, 0, improvement)
+      
     }
     console.log(this.userImprovements);
+    
 
     // let currentTile = this.boardService.getTile(0, 0);
     
