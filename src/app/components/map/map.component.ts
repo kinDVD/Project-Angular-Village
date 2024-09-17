@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { VillageService } from '../../services/village.service';
 import { Improvements } from '../../models/improvement';
 import { AppComponent } from '../../app.component';
@@ -15,25 +15,26 @@ import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router'
 export class MapComponent {
   constructor(private villageService: VillageService, private router: Router){}
 
-  improvementArray: Improvements[] = [];
+  @Input() improvementArray: Improvements[] = [];
 
   ngOnInit(){
 
-    for(let i = 0; i<36; i++){
-      this.improvementArray[i] = {} as Improvements;
-    }
-
-    console.log(this.improvementArray);
-   this.getUserImprovements(this.improvementArray); 
+    console.log("Current improvementArray", this.improvementArray);
+   this.getUserImprovements(); 
+   console.log("improvementArray post method", this.improvementArray);
   }
-  getUserImprovements(userImprovements: Improvements[]):void{
-     userImprovements = this.villageService.userImprovements;
+  getUserImprovements(){
+    if(this.villageService.userImprovements.length > 0){
+      this.improvementArray = [...this.villageService.userImprovements];
+    }
+     console.log(this.villageService.userImprovements);
+     console.log("Current list of improvements: ", this.improvementArray);
   }
   
-    onClick(i:number): void{
-      let test = this.improvementArray[i];
-      console.log(this.improvementArray[i]);
-       if (JSON.stringify(test) === "{}"){
+    onClick(i:number){
+      let tile = this.improvementArray[i];
+      console.log("Tile at index", i, tile);
+       if (tile === undefined){
         this.router.navigate(['/AddImprovement', i])
       }
       else{

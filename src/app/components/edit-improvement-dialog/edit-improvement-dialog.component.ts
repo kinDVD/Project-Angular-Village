@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { VillageService } from '../../services/village.service';
 import { Improvements } from '../../models/improvement';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 
 
 @Component({
@@ -14,16 +14,20 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 export class EditImprovementDialogComponent {
 
   userImprovements: Improvements[] = [];
+  tileID!: number;
 
-
-  constructor(private villageService: VillageService){}
+  
+  constructor(private villageService: VillageService,
+    private route: ActivatedRoute
+  ){}
   ngOnInit(){
+  this.tileID = Number(this.route.snapshot.paramMap.get('id'));
   this.userImprovements = this.villageService.getImprovements();
   }
 
-  // editImprovement():Improvements{
-    
-  // }
+  upgradeAnImprovement(){
+    //this.villageService.upgradeImprovement()
+  }
 
 
 }

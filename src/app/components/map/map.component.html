@@ -2,8 +2,9 @@
 <div id="GameBoard" class="container">
     <div class="row">
     @for(i of improvementArray; track $index){
-            <div class="col-2"> <button (click)="onClick($index)"> </button></div>
-            <!-- <img src="https://img.freepik.com/free-vector/houses-rural-area_1308-113075.jpg"/> -->
-    }    
+            <div class="col-2"> <button (click)="onClick($index)"> 
+                <img src="https://img.freepik.com/free-vector/houses-rural-area_1308-113075.jpg" alt="Improvement"/> 
+            </button></div>       
+    }
     </div>
 </div>

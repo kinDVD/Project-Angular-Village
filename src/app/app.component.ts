@@ -18,7 +18,7 @@ export class AppComponent {
 
   improvementArray:Improvements[] = [];
   resourceArray:Resources = {} as Resources;
-  constructor(private villageService: VillageService) {}
+  constructor(public villageService: VillageService) {}
 
   ngOnInit(){
     this.resourceArray = this.villageService.userResources;

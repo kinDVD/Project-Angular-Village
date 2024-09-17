@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Improvements } from '../../models/improvement';
 import { VillageService } from '../../services/village.service';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 
 
 @Component({
@@ -14,20 +14,25 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 export class AddImprovementDialogComponent {
 
   userImprovements: Improvements[] = [];
-  test:String = "House";
+  tileID!: number;
 
   display:boolean = false;
 
-  constructor(private villageService: VillageService, private router: Router){}
+  constructor(private villageService: VillageService, 
+    private router: Router,
+    private route: ActivatedRoute
+  ){}
   ngOnInit(){
   this.userImprovements = this.villageService.getImprovements();
   console.log("App component is working!")
 
-  this.villageService.addImprovement("House", 0);
+  this.tileID = Number(this.route.snapshot.paramMap.get('id'));
+  //this.villageService.addImprovement("House", 0);
   }
 
-  addToImprovements(name:String, id: number){
-    this.villageService.addImprovement(name, 0);
+  addToImprovements(name:String){
+    this.villageService.addImprovement(name, this.tileID);
+    this.router.navigate(['/Home']);
   }
 
   displayToggle(){

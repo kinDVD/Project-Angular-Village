@@ -47,7 +47,7 @@ export class VillageService {
         }
     },
     {
-      type: "Lumber Mill",
+      type: "Lumber-Mill",
       level: 1,
       cost:
         {
@@ -79,7 +79,7 @@ export class VillageService {
       people: 0
   }
     
-  userImprovements: Improvements[] = [];
+  userImprovements: Improvements[] = Array(36);
 
   cost: Resources = {} as Resources;
 
@@ -88,11 +88,12 @@ export class VillageService {
     let improvement = this.improvements.find(i => i.type === improvementType);
 
     if(improvement !== undefined){
-      console.log(improvement)
-      this.userImprovements.splice(id, 0, improvement)
-      
+      console.log(improvement);
+      this.userImprovements[id] = {...improvement};
+      //this.userImprovements.splice(id, 0, improvement)
+      console.log("Improvement added: at index ${id}", this.userImprovements[id]);
     }
-    console.log(this.userImprovements);
+    console.log("User improvements array: ", this.userImprovements);
     
 
     // let currentTile = this.boardService.getTile(0, 0);
@@ -137,18 +138,19 @@ export class VillageService {
   }
 
   // Reduces user's improvement by a level
-  downgradeImprovement(improvement: Improvements){
-    let userImprovement = this.userImprovements.find(i => i === improvement)
+  downgradeImprovement(id: number){
+    //let userImprovement = this.userImprovements.find(i => i === improvement)
 
-    if (userImprovement !== undefined){
-      this.cost = userImprovement.cost
+    
+    if (this.userImprovements[id] !== undefined){
+      this.cost = this.userImprovements[id].cost
       this.cost.lumber += this.userResources.lumber;
       this.cost.grain += this.userResources.grain;
       this.cost.sheep += this.userResources.sheep;
       this.cost.water += this.userResources.water;
       this.cost.people += this.userResources.people;
 
-      userImprovement.level -= 1;
+      this.userImprovements[id].level -= 1;
     }
   }
 
