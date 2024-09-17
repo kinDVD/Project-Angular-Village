@@ -79,7 +79,7 @@ export class VillageService {
       people: 0
   }
     
-  userImprovements: Improvements[] = Array(36);
+  userImprovements: any[] = new Array(36);
 
   cost: Resources = {} as Resources;
 
@@ -89,22 +89,63 @@ export class VillageService {
 
     if(improvement !== undefined){
       console.log(improvement);
-      this.userImprovements[id] = {...improvement};
-      //this.userImprovements.splice(id, 0, improvement)
-      console.log("Improvement added: at index ${id}", this.userImprovements[id]);
+      this.cost = improvement.cost
+
+      //Only add improvement if user has enough resources
+      if(this.reduceResources(this.cost) === true){
+        this.userImprovements[id] = {...improvement};
+        this.addToResources(improvement);
+        console.log("Improvement added: at index ${id}", this.userImprovements[id]);
+        
+      }
+      else{
+        console.log("You don't have enough resources dummy");
+      }
+    
+     
     }
+    
     console.log("User improvements array: ", this.userImprovements);
     
-
-    // let currentTile = this.boardService.getTile(0, 0);
-    
-    // //Validates if the user can afford the improvement
-    // if(improvement !== undefined){
-      
-    //   this.reduceResources(improvement.cost);
-    //   //this.userImprovements.push({improvement, currentTile});
-    // }
   }
+
+  addToResources(improvement:Improvements){
+    if(improvement.type == "House"){
+      this.userResources.people += 5;
+    }
+    if(improvement.type == "Field"){
+      this.userResources.grain += 10;
+    }
+    if(improvement.type == "Pasture"){
+      this.userResources.sheep += 5;
+    }
+    if(improvement.type == "Lumber-Mill"){
+      this.userResources.lumber += 10;
+    }
+    if(improvement.type == "Well"){
+      this.userResources.water += 10;
+    }
+  }
+
+  removeResources(improvement:Improvements){
+
+      if(improvement.type == "House"){
+        this.userResources.people -= (5);
+      }
+      if(improvement.type == "Field"){
+        this.userResources.grain -= (10);
+      }
+      if(improvement.type == "Pasture"){
+        this.userResources.sheep -= (5);
+      }
+      if(improvement.type == "Lumber-Mill"){
+        this.userResources.lumber -= (10);
+      }
+      if(improvement.type == "Well"){
+        this.userResources.water -= (10);
+      }
+  }
+
 
   //Method that checks if user can afford improvement
   canAffordImprovement(cost: Resources): Boolean{
@@ -116,24 +157,36 @@ export class VillageService {
             (resources.people >= cost.people));
   }
 
-  reduceResources(cost: Resources){
+  reduceResources(cost: Resources):boolean{
     // Reduces resources from user's resource
-    let resources = this.userResources;
-    resources.lumber -= cost.lumber;
-    resources.grain -= cost.grain;
-    resources.water -= cost.water;
-    resources.sheep -= cost.sheep;
-    resources.people -= cost.people;
+    if(this.canAffordImprovement(this.cost) == true){
+      this.userResources.lumber -= cost.lumber;
+      this.userResources.grain -= cost.grain;
+      this.userResources.water -= cost.water;
+      this.userResources.sheep -= cost.sheep;
+      this.userResources.people -= cost.people;
+      console.log("User resources array after reduction: ", this.userResources);
+      return true;
+    }
+    else{
+      return false;
+    }
+    
+    
   }
   
   // Upgrades user's improvement by a level
-  upgradeImprovement(improvement: Improvements){
-    let userImprovement = this.userImprovements.find(i => i === improvement)
-
-    if (userImprovement !== undefined){
-      this.cost = userImprovement.cost;
-      this.reduceResources(this.cost);
-      userImprovement.level += 1;
+  upgradeImprovement(id: number){
+   
+    if (this.userImprovements[id] !== undefined){
+      this.cost = this.userImprovements[id].cost;
+      if(this.reduceResources(this.cost) === true){
+        this.userImprovements[id].level += 1;
+        this.addToResources(this.userImprovements[id]);
+      }
+      else{
+        console.log("You don't have enough resources dummy")
+      }
     }
   }
 
@@ -142,20 +195,36 @@ export class VillageService {
     //let userImprovement = this.userImprovements.find(i => i === improvement)
 
     
-    if (this.userImprovements[id] !== undefined){
+    if (this.userImprovements[id] !== undefined && this.userImprovements[id].level > 1){
       this.cost = this.userImprovements[id].cost
-      this.cost.lumber += this.userResources.lumber;
-      this.cost.grain += this.userResources.grain;
-      this.cost.sheep += this.userResources.sheep;
-      this.cost.water += this.userResources.water;
-      this.cost.people += this.userResources.people;
-
+      this.userResources.lumber += this.cost.lumber;
+      this.userResources.grain += this.cost.grain;
+      this.userResources.sheep += this.cost.sheep;
+      this.userResources.water += this.cost.water;
+      this.userResources.people += this.cost.people;
+      this.removeResources(this.userImprovements[id]);
+      console.log("User resources array after adding: ", this.userResources);
       this.userImprovements[id].level -= 1;
     }
   }
 
-  removeImprovement(){
+  removeImprovement(id: number){
+    if (this.userImprovements[id] !== undefined){
+      this.cost = this.userImprovements[id].cost;
 
+      this.userResources.grain += (this.cost.grain * this.userImprovements[id].level);
+      this.userResources.lumber += (this.cost.grain * this.userImprovements[id].level);
+      this.userResources.people += (this.cost.people * this.userImprovements[id].level);
+      this.userResources.sheep += (this.cost.sheep * this.userImprovements[id].level);
+      this.userResources.water += (this.cost.water * this.userImprovements[id].level);
+      for (let i = 0; i < this.userImprovements[id].level; i++){
+        this.removeResources(this.userImprovements[id]);
+
+      }
+
+    }
+
+    this.userImprovements[id] = undefined;
   }
 
   getImprovements():Improvements[]{

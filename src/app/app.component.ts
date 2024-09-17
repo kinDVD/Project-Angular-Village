@@ -22,7 +22,7 @@ export class AppComponent {
 
   ngOnInit(){
     this.resourceArray = this.villageService.userResources;
-    console.log(this.resourceArray)
+    console.log(this.resourceArray);
   }
 
   

@@ -32,13 +32,15 @@ export class AddImprovementDialogComponent {
 
   addToImprovements(name:String){
     this.villageService.addImprovement(name, this.tileID);
-    this.router.navigate(['/Home']);
+    this.router.navigate(['/']);
   }
 
   displayToggle(){
     this.display = !this.display;
     console.log(this.display);
   }
+  
+ 
 
 
 }

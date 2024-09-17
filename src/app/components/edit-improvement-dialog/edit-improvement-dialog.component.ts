@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { VillageService } from '../../services/village.service';
 import { Improvements } from '../../models/improvement';
-import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 
 
 @Component({
@@ -18,7 +18,8 @@ export class EditImprovementDialogComponent {
 
   
   constructor(private villageService: VillageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ){}
   ngOnInit(){
   this.tileID = Number(this.route.snapshot.paramMap.get('id'));
@@ -26,8 +27,23 @@ export class EditImprovementDialogComponent {
   }
 
   upgradeAnImprovement(){
-    //this.villageService.upgradeImprovement()
+    this.villageService.upgradeImprovement(this.tileID);
+    console.log("This is the current level: ", this.villageService.userImprovements[this.tileID].level)
+    this.router.navigate(['/']);
   }
+
+  downgradeAnImprovement(){
+    this.villageService.downgradeImprovement(this.tileID);
+    console.log("This is the current level: ", this.villageService.userImprovements[this.tileID].level);
+    this.router.navigate(['/']);
+  }
+
+  removeAnImprovement(){
+    this.villageService.removeImprovement(this.tileID);
+    console.log("Value at tile: ", this.villageService.userImprovements[this.tileID])
+    this.router.navigate(['/']);
+  }
+
 
 
 }

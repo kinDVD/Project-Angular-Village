@@ -10,6 +10,8 @@ import { Resources } from '../../models/improvement';
   styleUrl: './resources-views.component.css'
 })
 export class ResourcesViewsComponent {
+
+  display:boolean = false;
   
   constructor(private villageService: VillageService){ }
 
@@ -17,6 +19,10 @@ export class ResourcesViewsComponent {
     return this.villageService.userResources;
   }
   
+  displayToggle(){
+    this.display = !this.display;
+    console.log(this.display);
+  }
   
 
 }

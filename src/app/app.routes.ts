@@ -8,6 +8,7 @@ export const routes: Routes = [
 {path: "Home", component: AppComponent},
 {path: "AddImprovement/:id", component: AddImprovementDialogComponent},
 {path: "EditImprovement/:id" , component: EditImprovementDialogComponent},
-{path: "**", component: PagenotfoundComponent}
+{path: "**", component: PagenotfoundComponent},
+{path: "", component: AppComponent}
 
 ];
