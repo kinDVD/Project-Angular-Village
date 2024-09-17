@@ -76,7 +76,7 @@ export class VillageService {
       grain: 5,
       water: 5,
       sheep: 5,
-      people: 0
+      people: 1
   }
     
   userImprovements: any[] = new Array(36);

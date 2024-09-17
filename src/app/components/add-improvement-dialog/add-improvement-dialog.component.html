@@ -1,11 +1,3 @@
-<h3>Choose an improvement to add: </h3>
-    <div>
-      <button (click)="addToImprovements('House')" class="btn btn-secondary" >House</button>
-      <button  (click)="addToImprovements('Field')" class="btn btn-success">Field</button>
-      <button  (click)="addToImprovements('Pasture')"class="btn btn-warning">Pasture</button>
-      <button  (click)="addToImprovements('Lumber-Mill')"class="btn btn-danger">Lumber-Mill</button>
-      <button  (click)="addToImprovements('Well')"class="btn btn-primary">Well</button>
-    </div>
 <button type="button" (click)="displayToggle()" class="btn btn-primary" >
       Improvement
      </button>
@@ -22,36 +14,53 @@
    <table class="table">
        <thead>
          <tr>
-           <th scope="col">Resource</th>
+           <th scope="col">Improvement</th>
            <th scope="col">Type</th>
-           <th scope="col">Amount</th>
+           <th scope="col">Cost</th>
+           <th scope="col">Purchase</th>
        </tr>
    </thead>
    <tbody>
        <tr>
-           <td><img height="100px"  src="https://goodineverygrain.ca/wp-content/uploads/2023/09/whole-grains-month_solid-1024x692.jpg"/></td>
-           <td>Grain </td>
-           <td>{{getResources().grain}}</td>
+           <td><img height="100px"  src="https://cdn.pixabay.com/photo/2024/04/06/11/58/ai-generated-8679187_640.png"/></td>
+           <td>House</td>
+           <td>
+            <p>Lumber -{{improvements[0].cost.lumber}}</p>
+            <p>Grain -{{improvements[0].cost.grain}}</p>
+            <p>Water -{{improvements[0].cost.water}}</p>
+            <p>Sheep -{{improvements[0].cost.sheep}}</p>
+          </td>
+           <td><button (click)="addToImprovements('House')" class="btn btn-secondary" >House</button></td>
        </tr>
        <tr>
-           <td><img height="100px"  src="https://static.vecteezy.com/system/resources/previews/035/511/974/non_2x/ai-generated-lumber-clipart-design-illustration-free-png.png"/></td>
-           <td>Lumber </td>
-           <td>{{getResources().lumber}}</td>
+           <td><img height="100px"  src="https://static.vecteezy.com/system/resources/thumbnails/007/563/124/small_2x/farm-background-with-barn-and-windmill-free-vector.jpg"/></td>
+           <td>Field</td>
+           <p>Water -{{improvements[1].cost.water}}</p>
+           <p>People -{{improvements[1].cost.people}}</p>
+           <td><button  (click)="addToImprovements('Field')" class="btn btn-success">Field</button></td>
    </tr>
    <tr>
-       <td><img height="100px"  src="https://img.freepik.com/free-vector/diverse-crowd-people-different-ages-races_74855-5235.jpg"></td>
-       <td>People</td>
-       <td>{{getResources().people}}</td>
+       <td><img height="100px"  src="https://static.vecteezy.com/system/resources/thumbnails/002/175/102/small/rural-dairy-farm-landscape-with-cows-over-seamless-panoramic-horizon-hills-meadows-trees-and-fields-skyline-summer-nature-background-pasture-grass-for-cows-vector.jpg"></td>
+       <td>Pasture</td>
+       <p>Grain -{{improvements[2].cost.grain}}</p>
+       <p>Water -{{improvements[2].cost.water}}</p>
+       <p>People -{{improvements[2].cost.people}}</p>
+       <td><button  (click)="addToImprovements('Pasture')"class="btn btn-warning">Pasture</button></td>
    </tr>
    <tr>
-       <td><img height="100px"  src="https://static.vecteezy.com/system/resources/thumbnails/021/769/123/small_2x/cute-sheep-free-vector.jpg"></td>
-       <td>Sheep</td>
-       <td>{{getResources().sheep}}</td>
+       <td><img height="100px"  src="https://media.istockphoto.com/id/514222678/vector/lumber-mill-sawmill-building.jpg?s=612x612&w=0&k=20&c=ToEA2yUQ5h5HvvTBy-xeA8I475iGEJHDE0Cok6nshaE="></td>
+       <td>Lumber-Mill</td>
+       <td>People -{{improvements[3].cost.people}}</td>
+       <td><button  (click)="addToImprovements('Lumber-Mill')"class="btn btn-danger">Lumber-Mill</button></td>
    </tr>
    <tr>
-       <td><img height="100px"  src="https://cdn.pixabay.com/photo/2014/03/24/17/20/droplet-295457_1280.png"></td>
-       <td>Water</td>
-       <td>{{getResources().water}}</td>
+       <td><img height="100px"  src="https://media.istockphoto.com/id/685117658/vector/brick-well-with-blue-water-and-wooden-bucket.jpg?s=612x612&w=0&k=20&c=eYxo4sXm_IKcZ5v2j4iO-rmiTjPt_Aw3HhJliOz-Qlo="></td>
+       <td>Well</td>
+       <td>
+          <p>Lumber -{{improvements[4].cost.lumber}}</p>
+          <p>People -{{improvements[4].cost.people}}</p>
+      </td>
+       <td><button  (click)="addToImprovements('Well')"class="btn btn-primary">Well</button></td>
    </tr>
    </tbody>
    </table>

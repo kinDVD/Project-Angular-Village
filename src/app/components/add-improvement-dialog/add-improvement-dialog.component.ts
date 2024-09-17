@@ -14,6 +14,8 @@ import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/route
 export class AddImprovementDialogComponent {
 
   userImprovements: Improvements[] = [];
+  improvements: Improvements[] = [];
+
   tileID!: number;
 
   display:boolean = false;
@@ -25,7 +27,7 @@ export class AddImprovementDialogComponent {
   ngOnInit(){
   this.userImprovements = this.villageService.getImprovements();
   console.log("App component is working!")
-
+  this.improvements = this.villageService.improvements;
   this.tileID = Number(this.route.snapshot.paramMap.get('id'));
   //this.villageService.addImprovement("House", 0);
   }
@@ -39,7 +41,6 @@ export class AddImprovementDialogComponent {
     this.display = !this.display;
     console.log(this.display);
   }
-  
  
 
 
