@@ -1,236 +1,128 @@
 import { Injectable } from '@angular/core';
-import { Improvements, Resources } from '../models/improvement';
-
+import { Improvement } from '../models/improvement';
+import { ImprovementByType } from '../models/improvement-by-type';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class VillageService {
+  improvements: Improvement[] = Array.from({ length: 36 }, (_, index) => ({ type: '', level: 0 }));
+  resources: Map<string, number> = this.starterPack();
+  improvementByType: ImprovementByType[] = this.improvementStore();
 
-
-
-  improvements: Improvements[] = [
-    {
-      type: "House",
-      level: 1,
-      cost:
-        {
-          lumber: 5, 
-          grain:5, 
-          water: 5, 
-          sheep: 1, 
-          people: 0
-        }
-    },
-    {
-      type: "Field",
-      level: 1,
-      cost:
-        {
-          lumber: 0,
-          grain: 0,
-          water: 2,
-          sheep: 0,
-          people: 1
-        }
-    },
-    {
-      type: "Pasture",
-      level: 1,
-      cost:
-        {
-          lumber: 0,
-          grain: 2,
-          water: 2,
-          sheep: 0,
-          people: 1
-        }
-    },
-    {
-      type: "Lumber-Mill",
-      level: 1,
-      cost:
-        {
-          lumber: 0,
-          grain: 0,
-          water: 0,
-          sheep: 0,
-          people: 1
-        }
-    },
-    {
-      type: "Well",
-      level: 1,
-      cost:
-        {
-          lumber: 2,
-          grain: 0,
-          water: 0,
-          sheep: 0,
-          people: 1
-        }
-    }
-  ]
-  userResources:Resources = {
-      lumber: 5,
-      grain: 5,
-      water: 5,
-      sheep: 5,
-      people: 1
-  }
-    
-  userImprovements: any[] = new Array(36);
-
-  cost: Resources = {} as Resources;
-
-  //Adds improvement by taking in the improvementType the user wishes to upgrade
-  addImprovement(improvementType: String, id: number){
-    let improvement = this.improvements.find(i => i.type === improvementType);
-
-    if(improvement !== undefined){
-      console.log(improvement);
-      this.cost = improvement.cost
-
-      //Only add improvement if user has enough resources
-      if(this.reduceResources(this.cost) === true){
-        this.userImprovements[id] = {...improvement};
-        this.addToResources(improvement);
-        console.log("Improvement added: at index ${id}", this.userImprovements[id]);
-        
+  improvementStore(): ImprovementByType[] {
+    return [
+      {
+        type: 'House',
+        cost: new Map([
+          ['Lumber', 5],
+          ['Grain', 5],
+          ['Water', 5],
+          ['Sheep', 1]
+        ]),
+        effect: new Map([
+          ['People', 5]
+        ])
+      },
+      {
+        type: 'Field',
+        cost: new Map([
+          ['People', 1],
+          ['Water', 2]
+        ]),
+        effect: new Map([
+          ['Grain', 10]
+        ])
+      },
+      {
+        type: 'Pasture',
+        cost: new Map([
+          ['People', 1],
+          ['Grain', 2],
+          ['Water', 2]
+        ]),
+        effect: new Map([
+          ['Sheep', 5]
+        ])
+      },
+      {
+        type: 'Lumber Mill',
+        cost: new Map([
+          ['People', 1]
+        ]),
+        effect: new Map([
+          ['Lumber', 10]
+        ])
+      },
+      {
+        type: 'Well',
+        cost: new Map([
+          ['People', 1],
+          ['Lumber', 2]
+        ]),
+        effect: new Map([
+          ['Water', 10]
+        ])
       }
-      else{
-        console.log("You don't have enough resources dummy");
-      }
-    
-     
-    }
-    
-    console.log("User improvements array: ", this.userImprovements);
-    
+    ];
   }
 
-  addToResources(improvement:Improvements){
-    if(improvement.type == "House"){
-      this.userResources.people += 5;
-    }
-    if(improvement.type == "Field"){
-      this.userResources.grain += 10;
-    }
-    if(improvement.type == "Pasture"){
-      this.userResources.sheep += 5;
-    }
-    if(improvement.type == "Lumber-Mill"){
-      this.userResources.lumber += 10;
-    }
-    if(improvement.type == "Well"){
-      this.userResources.water += 10;
+  starterPack(): Map<string, number> {
+    return new Map([
+      ['Lumber', 5],
+      ['Grain', 5],
+      ['Water', 5],
+      ['Sheep', 1],
+      ['People', 1]
+    ]);
+  }
+
+  addImprovement(type: string, index: number): void {
+    this.improvements[index] = { type, level: 1 };
+  }
+
+  removeImprovement(index: number): void {
+    this.improvements[index] = { type: '', level: 0 };
+  }
+
+  upgradeImprovement(index: number): void {
+    const improvement = this.improvements[index];
+    if (improvement.level) {
+      improvement.level += 1;
     }
   }
 
-  removeResources(improvement:Improvements){
-
-      if(improvement.type == "House"){
-        this.userResources.people -= (5);
-      }
-      if(improvement.type == "Field"){
-        this.userResources.grain -= (10);
-      }
-      if(improvement.type == "Pasture"){
-        this.userResources.sheep -= (5);
-      }
-      if(improvement.type == "Lumber-Mill"){
-        this.userResources.lumber -= (10);
-      }
-      if(improvement.type == "Well"){
-        this.userResources.water -= (10);
-      }
-  }
-
-
-  //Method that checks if user can afford improvement
-  canAffordImprovement(cost: Resources): Boolean{
-    let resources = this.userResources;
-    return ((resources.lumber >= cost.lumber) &&
-            (resources.grain >= cost.grain) &&
-            (resources.water >= cost.water) &&
-            (resources.sheep >= cost.sheep) &&
-            (resources.people >= cost.people));
-  }
-
-  reduceResources(cost: Resources):boolean{
-    // Reduces resources from user's resource
-    if(this.canAffordImprovement(this.cost) == true){
-      this.userResources.lumber -= cost.lumber;
-      this.userResources.grain -= cost.grain;
-      this.userResources.water -= cost.water;
-      this.userResources.sheep -= cost.sheep;
-      this.userResources.people -= cost.people;
-      console.log("User resources array after reduction: ", this.userResources);
-      return true;
-    }
-    else{
-      return false;
-    }
-    
-    
-  }
-  
-  // Upgrades user's improvement by a level
-  upgradeImprovement(id: number){
-   
-    if (this.userImprovements[id] !== undefined){
-      this.cost = this.userImprovements[id].cost;
-      if(this.reduceResources(this.cost) === true){
-        this.userImprovements[id].level += 1;
-        this.addToResources(this.userImprovements[id]);
-      }
-      else{
-        console.log("You don't have enough resources dummy")
-      }
+  downgradeImprovement(index: number): void {
+    const improvement = this.improvements[index];
+    if (improvement.level > 1) {
+      improvement.level -= 1;
     }
   }
 
-  // Reduces user's improvement by a level
-  downgradeImprovement(id: number){
-    //let userImprovement = this.userImprovements.find(i => i === improvement)
-
-    
-    if (this.userImprovements[id] !== undefined && this.userImprovements[id].level > 1){
-      this.cost = this.userImprovements[id].cost
-      this.userResources.lumber += this.cost.lumber;
-      this.userResources.grain += this.cost.grain;
-      this.userResources.sheep += this.cost.sheep;
-      this.userResources.water += this.cost.water;
-      this.userResources.people += this.cost.people;
-      this.removeResources(this.userImprovements[id]);
-      console.log("User resources array after adding: ", this.userResources);
-      this.userImprovements[id].level -= 1;
-    }
+  addResources(requisites: Map<string, number>): void {
+    requisites.forEach((value, key) => {
+      const currentAmount = this.resources.get(key) ?? 0;
+      this.resources.set(key, currentAmount + value);
+    });
   }
 
-  removeImprovement(id: number){
-    if (this.userImprovements[id] !== undefined){
-      this.cost = this.userImprovements[id].cost;
-
-      this.userResources.grain += (this.cost.grain * this.userImprovements[id].level);
-      this.userResources.lumber += (this.cost.grain * this.userImprovements[id].level);
-      this.userResources.people += (this.cost.people * this.userImprovements[id].level);
-      this.userResources.sheep += (this.cost.sheep * this.userImprovements[id].level);
-      this.userResources.water += (this.cost.water * this.userImprovements[id].level);
-      for (let i = 0; i < this.userImprovements[id].level; i++){
-        this.removeResources(this.userImprovements[id]);
-
-      }
-
-    }
-
-    this.userImprovements[id] = undefined;
+  removeResources(requisites: Map<string, number>): void {
+    requisites.forEach((value, key) => {
+      const currentAmount = this.resources.get(key) ?? 0;
+      this.resources.set(key, currentAmount - value);
+    });
   }
 
-  getImprovements():Improvements[]{
-    return this.userImprovements;
+  getImprovementByType(): ImprovementByType[] {
+    return this.improvementByType;
   }
 
+  getImprovementByName(type: string): ImprovementByType | undefined {
+    return this.improvementByType.find(item => item.type === type);
+  }
 
-
+  getImprovements(): Improvement[] {
+    return this.improvements;
+  }
 }

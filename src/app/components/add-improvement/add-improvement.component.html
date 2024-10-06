@@ -1,0 +1,22 @@
+<div>
+  <select [(ngModel)]="type">
+    <option *ngFor="let option of improvementOptions" [value]="option.type">
+      {{ option.type }}
+    </option>
+  </select>
+  <button (click)="addImprovement()">Add Improvement</button>
+  <div class="resources">
+    <table>
+      <thead>
+        <tr>
+          <th>Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of getRequirements() | keyvalue">
+          <td>{{ item.key }}: {{ item.value }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

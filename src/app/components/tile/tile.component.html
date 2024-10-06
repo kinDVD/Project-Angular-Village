@@ -1,1 +1,15 @@
-<p>tile works!</p>
+<div>
+    <ng-container *ngIf="improvement.level">
+      <div class="dialog" [class.hidden]="!displayPanel">
+        <app-edit-improvement [index]="index"></app-edit-improvement>
+      </div>
+      <span *ngIf="improvement.level > 1" class="badge rounded-pill bg-primary">{{ improvement.level }}</span>
+    </ng-container>
+    <ng-container *ngIf="!improvement.level">
+      <div class="dialog" [class.hidden]="!displayPanel">
+        <app-add-improvement [index]="index" (improve)="displayPanel = !displayPanel"></app-add-improvement>
+      </div>
+    </ng-container>
+    <button class="clicker" (click)="displayPanel = !displayPanel"></button>
+  </div>
+  

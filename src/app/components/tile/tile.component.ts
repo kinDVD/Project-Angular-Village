@@ -1,28 +1,19 @@
-import { Component } from '@angular/core';
-import { VillageService } from '../../services/village.service';
-import { Improvements } from '../../models/improvement';
-
+import { Component, Input } from '@angular/core';
+import { AddImprovementComponent } from '../add-improvement/add-improvement.component';
+import { Improvement } from '../../models/improvement';
+import { EditImprovementComponent } from '../edit-improvement/edit-improvement.component';
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-tile',
   standalone: true,
-  imports: [],
+  imports: [AddImprovementComponent, EditImprovementComponent, NgIf, CommonModule],
   templateUrl: './tile.component.html',
-  styleUrl: './tile.component.css'
+  styleUrls: ['./tile.component.css'],
 })
 export class TileComponent {
-  constructor(private villageService: VillageService){}
+  @Input() improvement: Improvement = {} as Improvement;
+  @Input() index: number = -1;
 
-  // getTile():number[]{
-  //   return this.villageService.getImprovements()
-  // }
-
-  // getTileStatus():boolean{
-  //   return this.tile.empty;
-  // }
-
-  getUserImprovements(userImprovements: Improvements[]):void{
-    userImprovements = this.villageService.userImprovements;
- }
-
+  displayPanel: boolean = false;
 }

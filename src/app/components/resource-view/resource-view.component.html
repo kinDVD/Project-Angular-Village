@@ -1,0 +1,7 @@
+<div class="container">
+  <app-resource-line
+    *ngFor="let resource of resources | keyvalue"
+    [type]="resource.key"
+    [quantity]="resource.value"
+  ></app-resource-line>
+</div>

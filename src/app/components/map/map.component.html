@@ -1,15 +1,7 @@
-<p>The ultimate village sim</p>
-<div id="GameBoard" class="container">
-    <div class="row">
-    @for(i of getUserImprovements(); track $index){
-            <div class="col-2"> <button (click)="onClick($index)"> 
-                @if(i != undefined){
-                    {{i.type}} {{i.level}}
-                } @else {
-                    Empty
-                }
-                <!-- <img src="https://img.freepik.com/free-vector/houses-rural-area_1308-113075.jpg" alt="Improvement"/>  -->
-            </button></div>       
-    }
-    </div>
+<div class="container">
+  <div class="grid-container">
+    <ng-container *ngFor="let improvement of getImprovements(); let i = index">
+      <app-tile [improvement]="improvement" [index]="i" [style.animation-delay]="getTileDelay(i) * .1 + 's'"></app-tile>
+    </ng-container>
+  </div>
 </div>
